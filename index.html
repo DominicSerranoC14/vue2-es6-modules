@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+    <div id="root" class="row">
+      <div class="col-sm-3 box">
+        <p>Two way binding</p>
+        <input type="text" v-model="message">
+        <p v-text="message"></p>
+      </div>
+
+      <div class="col-sm-3 box">
+        <p>Looping with Vue</p>
+        <ul>
+          <li v-for="person in people" v-text="person.name"></li>
+        </ul>
+          <p>Adults Only (filter with a computed value)</p>
+        <ul>
+
+          <li v-for="person in adults" v-text="person.name"></li>
+        </ul>
+
+        <!-- Using custom components and vue conditional, created dynamic error messages -->
+        <error-alert v-if="nameError" header="Whoops!" msg="Please enter a name."></error-alert>
+        <error-alert v-if="ageError" header="Whoops!" msg="Please enter an age."></error-alert>
+
+        <input type="text" :placeholder="newNamePlaceholder" :class="{ 'error': nameError ? true: false }" v-model="newName" />
+        <input type="number" min="0" max="100" :class="{ 'error': ageError ? true: false }" v-model="newAge" />
+        <button type="button" :disabled="addingName" @click="validateNewPerson">Add Name</button>
+    </div>
+
+    <div class="col-sm-3 box">
+      <p>Rendering an ul with components</p>
+      <p>Uncompleted Tasks</p>
+      <task-list @completed="taskCompleted" :list="taskList"></task-list>
+      <p>Completed Tasks</p>
+      <task-list :list="completedTaskList"></task-list>
+    </div>
+  </div>
+
+
+    <script src="https://unpkg.com/vue"></script>
+    <!--  Load components first before creating new view model  -->
+    <script type="module" src="components.js"></script>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
