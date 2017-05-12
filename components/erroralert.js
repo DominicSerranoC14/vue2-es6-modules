@@ -1,5 +1,6 @@
 'use strict';
 
+
 export const errorAlertComp = {
 
   // Must define props that the component can use
@@ -14,5 +15,45 @@ export const errorAlertComp = {
     <p>{{ msg }}</p>
   </div>
   `
+
+};
+
+
+export const taskDisplayModalComp = {
+
+  template: `
+    <div class="modal fade">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>{{ msgBody }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  created() {
+
+    this.EventMain.$on('sendTaskDescriptionToModal', (desc) => {
+      this.msgBody = desc;
+      $('#msg-modal').modal();
+    })
+
+  },
+
+  data() {
+    return {
+      msgBody: ''
+    }
+  }
 
 };
