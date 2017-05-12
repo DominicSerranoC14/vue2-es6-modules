@@ -2,6 +2,7 @@
 
 import { taskComp } from './task.js';
 
+
 export const taskListComp = {
 
   props: [ 'list' ],
@@ -9,7 +10,7 @@ export const taskListComp = {
   template: `
     <div>
       <ul>
-        <task @completed="alertCompletedTask" v-for="each in list" :key="each.id" :obj="each"></task>
+        <task v-for="each in list" :key="each.id" :obj="each"></task>
       </ul>
     </div>
   `,
@@ -21,7 +22,11 @@ export const taskListComp = {
   methods: {
     // This function will emit a 'completed' task to the parent task-list component
     alertCompletedTask(val) {
-      this.$emit('completed', val);
+      this.EventMain.$emit('completed', val);
+    },
+
+    receiveTaskDescription(desc) {
+      console.log('from tasklist comp:', desc);
     }
   },
 

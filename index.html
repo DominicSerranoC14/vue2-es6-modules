@@ -12,6 +12,7 @@
   <body>
 
     <div id="root" class="row">
+
       <div class="col-sm-3 box">
         <p>Two way binding</p>
         <input type="text" v-model="message">
@@ -41,17 +42,17 @@
     <div class="col-sm-3 box">
       <p>Rendering an ul with components</p>
       <p>Uncompleted Tasks</p>
-      <task-list @completed="taskCompleted" :list="taskList"></task-list>
+      <task-list :list="taskList"></task-list>
       <p>Completed Tasks</p>
       <task-list :list="completedTaskList"></task-list>
+      <msg-modal id="msg-modal"></msg-modal>
     </div>
   </div>
 
 
     <script src="https://unpkg.com/vue"></script>
-    <!--  Load components first before creating new view model  -->
-    <script type="module" src="components.js"></script>
 
+    <!--  Load components first before creating new view model  -->
     <script type="module" src="main.js"></script>
   </body>
 </html>

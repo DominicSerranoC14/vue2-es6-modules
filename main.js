@@ -2,7 +2,17 @@
 
 import { taskListComp } from './components/taskList.js';
 import { taskComp } from './components/task.js';
-import { errorAlertComp } from './components/erroralert.js';
+import { errorAlertComp, taskDisplayModalComp } from './components/erroralert.js';
+
+const EventMain = new Vue();
+
+Vue.mixin({
+  data() {
+    return {
+      EventMain: EventMain
+    }
+  }
+});
 
 new Vue({
   el: '#root',
@@ -22,17 +32,25 @@ new Vue({
       { name: 'Lauren', age: 17 },
     ],
     taskList: [
-      { task: 'Grocery Store', completed: false },
-      { task: 'Bank', completed: false },
-      { task: 'Oil Change', completed: false },
-      { task: 'Pay Bills', completed: false },
+      { task: 'Grocery Store', description: 'Need milk and eggs', completed: false },
+      { task: 'Bank', description: 'Need checks', completed: false },
+      { task: 'Oil Change', description: '6:30 Friday 2/24', completed: false },
+      { task: 'Pay Bills', description: 'Electric and Water due', completed: false },
     ],
+  },
+
+  created() {
+
+    // Complete a task when a done button is clicked. Received from task comp
+    this.EventMain.$on('completed', (task) => this.taskCompleted(task));
+
   },
 
   components: {
     'task-list': taskListComp,
     'task': taskComp,
-    'error-alert': errorAlertComp
+    'error-alert': errorAlertComp,
+    'msg-modal': taskDisplayModalComp
   },
 
   methods: {
