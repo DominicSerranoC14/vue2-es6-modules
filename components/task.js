@@ -6,7 +6,8 @@ export const taskComp  = {
   props: [ 'obj' ],
 
   template: `
-    <li class="d-flex justify-content-between"> {{ obj.task }}
+    <li class="d-flex flex-row justify-content-between">
+      <p v-text="obj.task"></p>
       <button class="btn btn-primary" v-if="!obj.completed" @click="completeTask">Done</button>
       <button class="btn btn-info" @click="displayDescription">Show More</button>
     </li>

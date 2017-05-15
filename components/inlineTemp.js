@@ -1,21 +1,21 @@
 'use strict';
 
 export const homeInlineTemp = {
- 
+
   // Mounted lifecycle method is called after the created method
   mounted() {
 
     // Retrieve homePageContent json
-    fetch('../data/homeInlineTempData.json')
-    .then(data => data.json())
+    axios.get('../data/homeInlineTempData.json')
+    .then(({ data }) => data)
     .then((json) => {
       this.homePageData = json;
       this.homePageResults = json;
     }),
 
     // Retrieve homePageSubContent json
-    fetch('../data/homeInlineTempNav.json')
-    .then(data => data.json())
+    axios.get('../data/homeInlineTempNav.json')
+    .then(({ data }) => data)
     .then((json) => this.homePageNavContent = json)
 
   },
