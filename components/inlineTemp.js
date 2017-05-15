@@ -1,8 +1,7 @@
 'use strict';
 
 export const homeInlineTemp = {
-
-
+ 
   // Mounted lifecycle method is called after the created method
   mounted() {
 

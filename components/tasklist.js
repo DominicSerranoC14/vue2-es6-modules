@@ -9,8 +9,8 @@ export const taskListComp = {
 
   template: `
     <div>
-      <ul>
-        <task v-for="each in list" :key="each.id" :obj="each"></task>
+      <ul class="list-group">
+        <task class="list-group-item" v-for="each in list" :key="each.id" :obj="each"></task>
       </ul>
     </div>
   `,
