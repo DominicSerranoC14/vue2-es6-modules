@@ -20,10 +20,10 @@ export const taskComp  = {
       this.EventMain.$emit('completed', this.obj);
     },
 
-    // Emit an event to event hub and send task desc with it
-    // Modal will display task description
+    // Emit an event to event hub and send the task with it
+    // Modal will display task description and title
     displayDescription() {
-      this.EventMain.$emit('sendTaskDescriptionToModal', this.obj.description);
+      this.EventMain.$emit('sendTaskToModal', this.obj);
     }
 
   }

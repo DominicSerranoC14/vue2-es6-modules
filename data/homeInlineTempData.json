@@ -1,0 +1,6 @@
+[
+  { "name": "Grocery Store", "desc": "Need milk and eggs", "page": "Todos", "completed": false },
+  { "name": "Bank", "desc": "Need checks", "page": "Todos", "completed": false },
+  { "name": "Oil Change", "desc": "6:30 Friday 2/24", "page": "Appointments", "completed": false },
+  { "name": "Pay Bills", "desc": "Electric and Water due", "page": "Todos", "completed": false }
+]

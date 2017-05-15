@@ -23,10 +23,6 @@ export const taskListComp = {
     // This function will emit a 'completed' task to the parent task-list component
     alertCompletedTask(val) {
       this.EventMain.$emit('completed', val);
-    },
-
-    receiveTaskDescription(desc) {
-      console.log('from tasklist comp:', desc);
     }
   },
 
