@@ -5,13 +5,15 @@ export const taskComp  = {
 
   props: [ 'obj' ],
 
-  template: `
+  // For testing purposes, when using a .js comp with a template string, and when using the run-time only build of Vue (which is how the current env with Karma is set up) use a render function instead of template: `<div></div>`
+  render() {
+    return `
     <li class="d-flex flex-row justify-content-between">
       <p v-text="obj.task"></p>
       <button class="btn btn-primary" v-if="!obj.completed" @click="completeTask">Done</button>
       <button class="btn btn-info" @click="displayDescription">Show More</button>
     </li>
-  `,
+  ` },
 
   methods: {
 

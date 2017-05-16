@@ -23,14 +23,22 @@ module.exports = function(config) {
 
 
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: [],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/*Spec.js': ['webpack']
+      'test/*Spec.js': ['webpack', 'sourcemap']
+    },
+
+    // Webpack settings here
+    webpack: {
+      devtool: 'inline-source-map',
+
+      // resolve: {
+      //   alias: {vue: 'vue/dist/vue.js'}
+      // }
     },
 
 
@@ -60,7 +68,7 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     // This will launch a browser in headless mode, used for cli testing
-    browsers: ['Chrome'],
+    browsers: [ 'ChromeCanary' ],
 
 
     // Continuous Integration mode

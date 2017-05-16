@@ -1,6 +1,13 @@
 'use strict';
 
+// This breaks localhost
+// Need to import this here for testing purposes, it was not defined in the spec file
+// import axios from 'axios';
+
 export const homeInlineTemp = {
+
+  // This will pull in the template for testing
+  render: () => document.querySelector('#home-inline-template'),
 
   // Mounted lifecycle method is called after the created method
   mounted() {
