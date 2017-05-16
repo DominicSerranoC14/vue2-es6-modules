@@ -9,8 +9,8 @@ export const taskListComp = {
 
   template: `
     <div>
-      <ul>
-        <task v-for="each in list" :key="each.id" :obj="each"></task>
+      <ul class="list-group">
+        <task class="list-group-item" v-for="each in list" :key="each.id" :obj="each"></task>
       </ul>
     </div>
   `,
@@ -23,10 +23,6 @@ export const taskListComp = {
     // This function will emit a 'completed' task to the parent task-list component
     alertCompletedTask(val) {
       this.EventMain.$emit('completed', val);
-    },
-
-    receiveTaskDescription(desc) {
-      console.log('from tasklist comp:', desc);
     }
   },
 

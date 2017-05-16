@@ -2,7 +2,9 @@
 
 import { taskListComp } from './components/taskList.js';
 import { taskComp } from './components/task.js';
-import { errorAlertComp, taskDisplayModalComp } from './components/erroralert.js';
+import { errorAlertComp } from './components/erroralert.js';
+import { taskDisplayModalComp } from './components/modal.js';
+import { homeInlineTemp } from './components/inlineTemp.js';
 
 const EventMain = new Vue();
 
@@ -32,10 +34,10 @@ new Vue({
       { name: 'Lauren', age: 17 },
     ],
     taskList: [
-      { task: 'Grocery Store', description: 'Need milk and eggs', completed: false },
-      { task: 'Bank', description: 'Need checks', completed: false },
-      { task: 'Oil Change', description: '6:30 Friday 2/24', completed: false },
-      { task: 'Pay Bills', description: 'Electric and Water due', completed: false },
+      { task: 'Grocery Store', desc: 'Need milk and eggs', completed: false },
+      { task: 'Bank', desc: 'Need checks', completed: false },
+      { task: 'Oil Change', desc: '6:30 Friday 2/24', completed: false },
+      { task: 'Pay Bills', desc: 'Electric and Water due', completed: false },
     ],
   },
 
@@ -50,7 +52,8 @@ new Vue({
     'task-list': taskListComp,
     'task': taskComp,
     'error-alert': errorAlertComp,
-    'msg-modal': taskDisplayModalComp
+    'msg-modal': taskDisplayModalComp,
+    'home-inline-template': homeInlineTemp
   },
 
   methods: {

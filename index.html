@@ -37,20 +37,51 @@
         <input type="text" :placeholder="newNamePlaceholder" :class="{ 'error': nameError ? true: false }" v-model="newName" />
         <input type="number" min="0" max="100" :class="{ 'error': ageError ? true: false }" v-model="newAge" />
         <button type="button" :disabled="addingName" @click="validateNewPerson">Add Name</button>
-    </div>
+      </div>
 
-    <div class="col-sm-3 box">
-      <p>Rendering an ul with components</p>
-      <p>Uncompleted Tasks</p>
-      <task-list :list="taskList"></task-list>
-      <p>Completed Tasks</p>
-      <task-list :list="completedTaskList"></task-list>
-      <msg-modal id="msg-modal"></msg-modal>
-    </div>
+      <div class="col-sm-3 box">
+        <p>Rendering an ul with components</p>
+        <p>Uncompleted Tasks</p>
+        <task-list :list="taskList"></task-list>
+        <p>Completed Tasks</p>
+        <task-list :list="completedTaskList"></task-list>
+        <msg-modal id="msg-modal"></msg-modal>
+      </div>
+
+      <div class="col-sm-3 box">
+        <!-- Inline template with vue js component, will use this with Laravel -->
+        <home-inline-template inline-template>
+          <div>
+
+            <h1>{{ title }}</h1>
+
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" @click="filterPage()">All</a>
+                </li>
+                <li class="page-item" v-for="each in homePageNavContent">
+                  <a class="page-link" @click="filterPage(each.name)">{{ each.name }}</a>
+                </li>
+              </ul>
+            </nav>
+
+            <!-- Displaying each todo -->
+            <ul class="list-group d-flex flex-column">
+              <li class="list-group-item list-group-item-action" v-for="each in homePageResults" @click="displayDescription(each)">
+                <p>{{ each.name }}</p>
+              </li>
+            </ul>
+
+          </div>
+        </home-inline-template>
+
+      </div>
   </div>
 
 
-    <script src="https://unpkg.com/vue"></script>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/axios/dist/axios.js"></script>
 
     <!--  Load components first before creating new view model  -->
     <script type="module" src="main.js"></script>
