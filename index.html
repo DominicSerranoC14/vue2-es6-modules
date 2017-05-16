@@ -42,9 +42,9 @@
       <div class="col-sm-3 box">
         <p>Rendering an ul with components</p>
         <p>Uncompleted Tasks</p>
-        <task-list :list="taskList"></task-list>
+        <task-list :list="$store.getters.getTaskList"></task-list>
         <p>Completed Tasks</p>
-        <task-list :list="completedTaskList"></task-list>
+        <task-list :list="$store.getters.getCompletedTaskList"></task-list>
         <msg-modal id="msg-modal"></msg-modal>
       </div>
 
@@ -77,10 +77,18 @@
         </home-inline-template>
 
       </div>
+
+      <div class="col-sm-3 box">
+        <div class="row justify-content-center">
+          <p class="col-sm-8">Store counter value:</p>
+          <counter class="col-sm-4"></counter>
+        </div>
+      </div>
   </div>
 
 
     <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/vuex/dist/vuex.js"></script>
     <script src="node_modules/axios/dist/axios.js"></script>
 
     <!--  Load components first before creating new view model  -->

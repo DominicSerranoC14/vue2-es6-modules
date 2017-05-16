@@ -5,6 +5,37 @@ import { taskComp } from './components/task.js';
 import { errorAlertComp } from './components/erroralert.js';
 import { taskDisplayModalComp } from './components/modal.js';
 import { homeInlineTemp } from './components/inlineTemp.js';
+import { counterComp } from './components/counter.js';
+
+const store = new Vuex.Store({
+  // global data
+  state: {
+    count: 0,
+    taskList: [
+      { task: 'Grocery Store', desc: 'Need milk and eggs', completed: false },
+      { task: 'Bank', desc: 'Need checks', completed: false },
+      { task: 'Oil Change', desc: '6:30 Friday 2/24', completed: false },
+      { task: 'Pay Bills', desc: 'Electric and Water due', completed: false },
+    ]
+  },
+  // global computed properties
+  getters: {
+    getTaskList: (state) => state.taskList,
+    getCompletedTaskList: (state) => state.taskList.filter(({ completed }) => completed)
+  },
+  // mutations enable us to better log our changes of state
+  // they are synchronous in nature, so they shouldn't be called directly in some cases
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  },
+  // actions dispatch mutations, and can handle async tasks
+  actions: {
+    
+  }
+});
+
 
 const EventMain = new Vue();
 
@@ -18,6 +49,8 @@ Vue.mixin({
 
 new Vue({
   el: '#root',
+
+  store,
 
   data: {
     message: 'I am Groot',
@@ -33,12 +66,12 @@ new Vue({
       { name: 'Thomas', age: 24 },
       { name: 'Lauren', age: 17 },
     ],
-    taskList: [
-      { task: 'Grocery Store', desc: 'Need milk and eggs', completed: false },
-      { task: 'Bank', desc: 'Need checks', completed: false },
-      { task: 'Oil Change', desc: '6:30 Friday 2/24', completed: false },
-      { task: 'Pay Bills', desc: 'Electric and Water due', completed: false },
-    ],
+    // taskList: [
+    //   { task: 'Grocery Store', desc: 'Need milk and eggs', completed: false },
+    //   { task: 'Bank', desc: 'Need checks', completed: false },
+    //   { task: 'Oil Change', desc: '6:30 Friday 2/24', completed: false },
+    //   { task: 'Pay Bills', desc: 'Electric and Water due', completed: false },
+    // ],
   },
 
   created() {
@@ -53,7 +86,8 @@ new Vue({
     'task': taskComp,
     'error-alert': errorAlertComp,
     'msg-modal': taskDisplayModalComp,
-    'home-inline-template': homeInlineTemp
+    'home-inline-template': homeInlineTemp,
+    'counter': counterComp
   },
 
   methods: {
