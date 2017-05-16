@@ -36,6 +36,7 @@ module.exports = function(config) {
     webpack: {
       devtool: 'inline-source-map',
 
+      // Will need to use this if compiling .vue to .js
       // resolve: {
       //   alias: {vue: 'vue/dist/vue.js'}
       // }
