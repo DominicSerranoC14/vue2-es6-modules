@@ -40,9 +40,9 @@
       <div class="col-sm-3 box">
         <p>Rendering an ul with components</p>
         <p>Uncompleted Tasks</p>
-        <task-list :list="$store.getters.getTaskList"></task-list>
+        <task-list :list="$store.state.taskList"></task-list>
         <p>Completed Tasks</p>
-        <task-list :list="$store.getters.getCompletedTaskList"></task-list>
+        <task-list :list="$store.state.completedTaskList"></task-list>
         <msg-modal id="msg-modal"></msg-modal>
       </div>
 

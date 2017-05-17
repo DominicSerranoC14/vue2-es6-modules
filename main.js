@@ -17,6 +17,7 @@ const store = new Vuex.Store({
       { task: 'Oil Change', desc: '6:30 Friday 2/24', completed: false },
       { task: 'Pay Bills', desc: 'Electric and Water due', completed: false },
     ],
+    completedTaskList: [],
     people: [
       { name: 'Marisa', age: 26 },
       { name: 'Thomas', age: 24 },
@@ -25,10 +26,10 @@ const store = new Vuex.Store({
 
   },
 
-  // global computed properties
+  // global getter functions, great for filters
   getters: {
-    getTaskList: (state) => state.taskList,
-    getCompletedTaskList: (state) => state.taskList.filter(({ completed }) => completed),
+    // getTaskList: (state) => state.taskList,
+    // getCompletedTaskList: (state) => state.completedTaskList,
     getPeopleNameList: (state) => state.people.map(({ name }) => name).join(', '),
     getAdults: (state) => state.people.filter(({ age }) => age >= 18),
   },
@@ -44,9 +45,10 @@ const store = new Vuex.Store({
       state.people.push(person);
     },
 
-    // completeTask (state, task) {
-    //
-    // }
+    completeTask(state, task) {
+      state.taskList.splice(state.taskList.indexOf(task), 1);
+      state.completedTaskList.push(task);
+    },
   },
   // actions dispatch mutations, and can handle async tasks
   actions: {
@@ -129,11 +131,6 @@ new Vue({
         this.newAge = null;
       }, 1000);
     },
-
-    taskCompleted(val) {
-      this.taskList.splice(this.taskList.indexOf(val), 1);
-      this.completedTaskList.push(val);
-    }
 
   }
 
