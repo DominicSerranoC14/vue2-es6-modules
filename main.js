@@ -12,33 +12,52 @@ const store = new Vuex.Store({
   state: {
     count: 0,
     taskList: [
-      { task: 'Grocery Store', desc: 'Need milk and eggs', completed: false },
+      { task: 'Groceries', desc: 'Need milk and eggs', completed: false },
       { task: 'Bank', desc: 'Need checks', completed: false },
       { task: 'Oil Change', desc: '6:30 Friday 2/24', completed: false },
       { task: 'Pay Bills', desc: 'Electric and Water due', completed: false },
+    ],
+    people: [
+      { name: 'Marisa', age: 26 },
+      { name: 'Thomas', age: 24 },
+      { name: 'Lauren', age: 17 },
     ]
+
   },
+
   // global computed properties
   getters: {
     getTaskList: (state) => state.taskList,
-    getCompletedTaskList: (state) => state.taskList.filter(({ completed }) => completed)
+    getCompletedTaskList: (state) => state.taskList.filter(({ completed }) => completed),
+    getPeopleNameList: (state) => state.people.map(({ name }) => name).join(', '),
+    getAdults: (state) => state.people.filter(({ age }) => age >= 18),
   },
+
   // mutations enable us to better log our changes of state
   // they are synchronous in nature, so they shouldn't be called directly in some cases
   mutations: {
     increment (state) {
       state.count++
-    }
+    },
+
+    addNewPerson(state, person) {
+      state.people.push(person);
+    },
+
+    // completeTask (state, task) {
+    //
+    // }
   },
   // actions dispatch mutations, and can handle async tasks
   actions: {
-    
+
   }
 });
 
 
+// Creating root event hub for components
 const EventMain = new Vue();
-
+// Adding eventhub as a global mixin, e.g. available to all components
 Vue.mixin({
   data() {
     return {
@@ -58,20 +77,8 @@ new Vue({
     newAge: null,
     nameError: false,
     ageError: false,
-    completedTaskList: [],
     newNamePlaceholder: 'Enter a name to add',
     addingName: false,
-    people: [
-      { name: 'Marisa', age: 26 },
-      { name: 'Thomas', age: 24 },
-      { name: 'Lauren', age: 17 },
-    ],
-    // taskList: [
-    //   { task: 'Grocery Store', desc: 'Need milk and eggs', completed: false },
-    //   { task: 'Bank', desc: 'Need checks', completed: false },
-    //   { task: 'Oil Change', desc: '6:30 Friday 2/24', completed: false },
-    //   { task: 'Pay Bills', desc: 'Electric and Water due', completed: false },
-    // ],
   },
 
   created() {
@@ -117,7 +124,7 @@ new Vue({
       this.addingName = true;
       setTimeout(() => {
         this.addingName = false
-        this.people.push({ name: this.newName, age: this.newAge });
+        this.$store.commit({ type: 'addNewPerson', name: this.newName, age: this.newAge });
         this.newName = null;
         this.newAge = null;
       }, 1000);
@@ -127,14 +134,6 @@ new Vue({
       this.taskList.splice(this.taskList.indexOf(val), 1);
       this.completedTaskList.push(val);
     }
-
-  },
-
-  computed: {
-
-    adults() {
-      return this.people.filter(each => each.age >= 18);
-    },
 
   }
 
