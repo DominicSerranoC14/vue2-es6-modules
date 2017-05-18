@@ -37,12 +37,19 @@ export const globalStore = new Vuex.Store({
 
     addNewPerson: (state, person) => state.people.push(person),
 
-    completeTask: (state, task) => {
+    completeTask: ({ taskList, completedTaskList }, task) => {
       // Instead of editing this in task comp, only mutate the task object here, in the mutation handler
       task.completed = true;
-      state.taskList.splice(state.taskList.indexOf(task), 1);
-      state.completedTaskList.push(task);
+      taskList.splice(taskList.indexOf(task), 1);
+      completedTaskList.push(task);
     },
+
+    undoTaskCompletion: ({ taskList, completedTaskList }, task) => {
+      task.completed = false;
+      completedTaskList.splice(completedTaskList.indexOf(task), 1);
+      taskList.push(task);
+    },
+
   },
 
   // actions commit mutations, and can handle async tasks

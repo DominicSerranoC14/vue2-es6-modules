@@ -32,12 +32,16 @@ const app = new Vue({
     'task-list-inline': taskListInline,
   },
 
+  // Vuex helper method to map store actions locally
+  // Longhand would look like this: this.$store.dispatch('getTaskListJson'[, payload]);
+  methods: Vuex.mapActions([ 'getTaskListJson', 'getPeopleJson' ]),
+
   // Once the instance is created, then it is mounted
   mounted() {
 
     // Dispatching actions on the store
-    this.$store.dispatch('getTaskListJson');
-    this.$store.dispatch('getPeopleJson');
+    this.getTaskListJson();
+    this.getPeopleJson();
 
   },
 
