@@ -9,16 +9,6 @@ export const homeInlineTemp = {
   // This will pull in the template for testing
   render: () => document.querySelector('#home-inline-template'),
 
-  // Mounted lifecycle method is called after the created method
-  mounted() {
-
-    // Retrieve homePageSubContent json
-    axios.get('../data/homeInlineTempNav.json')
-    .then(({ data }) => data)
-    .then((json) => this.homePageNavContent = json)
-
-  },
-
   data() {
     return {
 
@@ -30,6 +20,13 @@ export const homeInlineTemp = {
   },
 
   methods: {
+
+    getNavbarJson() {
+      // Retrieve homePageSubContent json
+      return axios.get('../data/homeInlineTempNav.json')
+      .then(({ data }) => data)
+      .then((json) => this.homePageNavContent = json)
+    },
 
     // Filters the results shown on the page
     filterPage(keyword) {
@@ -46,6 +43,13 @@ export const homeInlineTemp = {
       this.EventMain.$emit('sendTaskToModal', each);
     },
 
-  }
+  },
+
+  // Mounted lifecycle method is called after the created method
+  mounted() {
+
+    this.getNavbarJson();
+
+  },
 
 };
