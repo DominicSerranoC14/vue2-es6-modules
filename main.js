@@ -1,6 +1,7 @@
 'use strict';
 
 import { globalStore } from './data/store.js';
+import { taskListInline } from './components/taskListInline.js';
 import { taskListComp } from './components/taskList.js';
 import { taskComp } from './components/task.js';
 import { errorAlertComp } from './components/erroralert.js';
@@ -22,41 +23,21 @@ const app = new Vue({
 
   store: globalStore,
 
-  methods: {
-
-    // Storing ajax calls as functions will make the available later instead of simply calling them in mounted
-    // Passing store in as an argument enables use of ES6 functions
-    getTaskListJson: (store) => (
-      // Retrieve task list json
-      axios.get('../data/taskList.json')
-      .then(({ data }) => data)
-      .then(json => store.commit('populateTaskList', json))
-    ),
-
-    getPeopleJson: (store) => (
-      // Retrieve people json
-      axios.get('../data/people.json')
-      .then(({ data }) => data)
-      .then(json => store.commit('populatePeople', json))
-    )
-
-  },
-
   components: {
-    'task-list': taskListComp,
-    'task': taskComp,
     'error-alert': errorAlertComp,
     'msg-modal': taskDisplayModalComp,
     'home-inline-template': homeInlineTemp,
     'counter': counterComp,
     'people-list-inline-template': peopleListTemp,
+    'task-list-inline': taskListInline,
   },
 
   // Once the instance is created, then it is mounted
   mounted() {
 
-    this.getTaskListJson(this.$store);
-    this.getPeopleJson(this.$store);
+    // Dispatching actions on the store
+    this.$store.dispatch('getTaskListJson');
+    this.$store.dispatch('getPeopleJson');
 
   },
 

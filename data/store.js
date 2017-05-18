@@ -1,5 +1,6 @@
 'use strict';
 
+
 export const globalStore = new Vuex.Store({
 
   // Runs Vuex in strict mode, will throw errors if state is mutated incorrectly
@@ -43,6 +44,26 @@ export const globalStore = new Vuex.Store({
       state.completedTaskList.push(task);
     },
   },
-  // actions dispatch mutations, and can handle async tasks
-  actions: {}
+
+  // actions commit mutations, and can handle async tasks
+  actions: {
+
+    // Storing ajax calls as functions will make the available later instead of simply calling them in mounted hook
+    // Actions accept a context object, which is similar to the state object that a mutation handler receives.
+    getTaskListJson: ({ commit }) => (
+      // Retrieve task list json
+      axios.get('../data/taskList.json')
+      .then(({ data }) => data)
+      .then(json => commit('populateTaskList', json))
+    ),
+
+    getPeopleJson: ({ commit }) => (
+      // Retrieve people json
+      axios.get('../data/people.json')
+      .then(({ data }) => data)
+      .then(json => commit('populatePeople', json))
+    )
+
+  }
+
 });

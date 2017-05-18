@@ -41,12 +41,15 @@
       </div>
 
       <div class="col-sm-3 box">
-        <p>Rendering an ul with components</p>
-        <p>Uncompleted Tasks</p>
-        <task-list :list="$store.state.taskList"></task-list>
-        <p>Completed Tasks</p>
-        <task-list :list="$store.state.completedTaskList"></task-list>
-        <msg-modal id="msg-modal"></msg-modal>
+        <task-list-inline inline-template>
+          <div>
+            <p>Rendering an ul with components</p>
+            <p>Uncompleted Tasks</p>
+            <task-list :list="taskList"></task-list>
+            <p>Completed Tasks</p>
+            <task-list :list="completedTaskList"></task-list>
+          </div>
+        </task-list-inline>
       </div>
 
       <div class="col-sm-3 box">
@@ -69,7 +72,7 @@
 
             <!-- Displaying each todo -->
             <ul class="list-group d-flex flex-column">
-              <li v-if="each.page === search || !search" class="list-group-item list-group-item-action" v-for="each in $store.getters.getAllTasks" @click="displayDescription(each)">
+              <li v-if="each.page === search || !search" class="list-group-item list-group-item-action" v-for="each in getAllTasks" @click="displayDescription(each)">
                 <p v-text="each.task"></p>
               </li>
             </ul>
@@ -84,6 +87,8 @@
           <counter></counter>
         </div>
       </div>
+      
+      <msg-modal id="msg-modal"></msg-modal>
     </div>
 
 

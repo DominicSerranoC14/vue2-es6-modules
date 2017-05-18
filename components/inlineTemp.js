@@ -1,14 +1,9 @@
 'use strict';
 
-// This breaks localhost
-// Need to import this here for testing purposes, it was not defined in the spec file
-// import axios from 'axios';
 
 export const homeInlineTemp = {
 
-  // This will pull in the template for testing
-  render: () => document.querySelector('#home-inline-template'),
-
+  // Local component data
   data() {
     return {
 
@@ -23,6 +18,7 @@ export const homeInlineTemp = {
 
     getNavbarJson() {
       // Retrieve homePageSubContent json
+      // Leaving this locally because only this component needs this data
       return axios.get('../data/homeInlineTempNav.json')
       .then(({ data }) => data)
       .then((json) => this.homePageNavContent = json)
@@ -43,6 +39,12 @@ export const homeInlineTemp = {
       this.EventMain.$emit('sendTaskToModal', each);
     },
 
+  },
+
+  computed: {
+    // Vuex helper function which returns getAllTasks from store getters
+    // Long hand for would look like: this.$state.getters.getAllTasks
+    ...Vuex.mapGetters([ 'getAllTasks' ])
   },
 
   // Mounted lifecycle method is called after the created method
