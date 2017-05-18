@@ -12,14 +12,6 @@ export const homeInlineTemp = {
   // Mounted lifecycle method is called after the created method
   mounted() {
 
-    // Retrieve homePageContent json
-    axios.get('../data/homeInlineTempData.json')
-    .then(({ data }) => data)
-    .then((json) => {
-      this.homePageData = json;
-      this.homePageResults = json;
-    }),
-
     // Retrieve homePageSubContent json
     axios.get('../data/homeInlineTempNav.json')
     .then(({ data }) => data)
@@ -31,9 +23,8 @@ export const homeInlineTemp = {
     return {
 
       title: "Home Page",
-      homePageData: '',
       homePageNavContent: '',
-      homePageResults: ''
+      search: null,
 
     }
   },
@@ -43,12 +34,11 @@ export const homeInlineTemp = {
     // Filters the results shown on the page
     filterPage(keyword) {
       if (!keyword) {
-        this.homePageResults = this.homePageData;
-        return;
+        return this.search = null;
       }
 
-      const filteredResults = this.homePageData.filter( each => each.page == keyword);
-      this.homePageResults = filteredResults;
+      this.search = keyword;
+
     },
 
     // Send task to modal

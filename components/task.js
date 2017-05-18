@@ -19,7 +19,6 @@ export const taskComp  = {
     // This function will emit a 'completed' task to the event hub
     completeTask() {
       this.obj.completed = true;
-      // this.EventMain.$emit('completed', this.obj);
       this.$store.commit('completeTask', this.obj);
     },
 

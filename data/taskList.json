@@ -1,0 +1,6 @@
+[
+  { "task": "Groceries", "desc": "Need milk and eggs", "page": "Todos", "completed": false },
+  { "task": "Bank", "desc": "Need checks", "page": "Todos", "completed": false },
+  { "task": "Oil Change", "desc": "6:30 Friday 2/24", "page": "Appointments", "completed": false },
+  { "task": "Pay Bills", "desc": "Electric and Water due", "page": "Todos", "completed": false }
+]

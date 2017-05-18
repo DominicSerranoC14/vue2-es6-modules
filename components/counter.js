@@ -17,7 +17,7 @@ export const counterComp = {
     },
 
     people() {
-      return this.$store.getters.getPeopleNameList;
+      return this.$store.getters.getPeopleString;
     }
 
   }
