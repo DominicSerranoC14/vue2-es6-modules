@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Fun With Vue</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -12,48 +12,52 @@
   <body>
 
     <div id="root" class="row">
-
       <div class="col-sm-3 box">
-        <p>Two way binding</p>
-        <input type="text" v-model="message">
-        <p v-text="message"></p>
+        <people-list-inline-template inline-template>
+          <div>
+            <p>Two way binding (local component data)</p>
+            <input type="text" v-model="message">
+            <p v-text="message"></p>
+
+            <p>Looping with Vue</p>
+            <ul>
+              <li v-for="person in $store.state.people" v-text="person.name"></li>
+            </ul>
+              <p>Adults Only (filter with a computed value)</p>
+            <ul>
+
+              <li v-for="person in $store.getters.getAdults" v-text="person.name"></li>
+            </ul>
+
+            <!-- Using custom components and vue conditional, created dynamic error messages -->
+            <error-alert v-if="nameError" header="Whoops!" msg="Please enter a name."></error-alert>
+            <error-alert v-if="ageError" header="Whoops!" msg="Please enter an age."></error-alert>
+
+            <input type="text" :placeholder="newNamePlaceholder" :class="{ 'error': nameError ? true: false }" v-model="newName" />
+            <input type="number" min="0" max="100" :class="{ 'error': ageError ? true: false }" v-model="newAge" />
+            <button type="button" class="btn btn-secondary" :disabled="addingName" @click="validateNewPerson">Add Name</button>
+          </div>
+        </people-list-inline-template>
       </div>
 
       <div class="col-sm-3 box">
-        <p>Looping with Vue</p>
-        <ul>
-          <li v-for="person in people" v-text="person.name"></li>
-        </ul>
-          <p>Adults Only (filter with a computed value)</p>
-        <ul>
-
-          <li v-for="person in adults" v-text="person.name"></li>
-        </ul>
-
-        <!-- Using custom components and vue conditional, created dynamic error messages -->
-        <error-alert v-if="nameError" header="Whoops!" msg="Please enter a name."></error-alert>
-        <error-alert v-if="ageError" header="Whoops!" msg="Please enter an age."></error-alert>
-
-        <input type="text" :placeholder="newNamePlaceholder" :class="{ 'error': nameError ? true: false }" v-model="newName" />
-        <input type="number" min="0" max="100" :class="{ 'error': ageError ? true: false }" v-model="newAge" />
-        <button type="button" :disabled="addingName" @click="validateNewPerson">Add Name</button>
-      </div>
-
-      <div class="col-sm-3 box">
-        <p>Rendering an ul with components</p>
-        <p>Uncompleted Tasks</p>
-        <task-list :list="taskList"></task-list>
-        <p>Completed Tasks</p>
-        <task-list :list="completedTaskList"></task-list>
-        <msg-modal id="msg-modal"></msg-modal>
+        <task-list-inline inline-template>
+          <div>
+            <p>Rendering an ul with components</p>
+            <p>Uncompleted Tasks</p>
+            <task-list :list="taskList"></task-list>
+            <p>Completed Tasks</p>
+            <task-list :list="completedTaskList"></task-list>
+          </div>
+        </task-list-inline>
       </div>
 
       <div class="col-sm-3 box">
         <!-- Inline template with vue js component, will use this with Laravel -->
-        <home-inline-template inline-template>
+        <home-inline-template id="home-inline-template" inline-template>
           <div>
 
-            <h1>{{ title }}</h1>
+            <h1 v-text="title"></h1>
 
             <nav aria-label="Page navigation example">
               <ul class="pagination">
@@ -68,8 +72,8 @@
 
             <!-- Displaying each todo -->
             <ul class="list-group d-flex flex-column">
-              <li class="list-group-item list-group-item-action" v-for="each in homePageResults" @click="displayDescription(each)">
-                <p>{{ each.name }}</p>
+              <li v-if="each.page === search || !search" class="list-group-item list-group-item-action" v-for="each in getAllTasks" @click="displayDescription(each)">
+                <p v-text="each.task"></p>
               </li>
             </ul>
 
@@ -77,10 +81,20 @@
         </home-inline-template>
 
       </div>
-  </div>
+
+      <div class="col-sm-3 box">
+        <div class="row justify-content-center">
+          <counter></counter>
+
+        </div>
+      </div>
+
+      <msg-modal id="msg-modal"></msg-modal>
+    </div>
 
 
     <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/vuex/dist/vuex.js"></script>
     <script src="node_modules/axios/dist/axios.js"></script>
 
     <!--  Load components first before creating new view model  -->

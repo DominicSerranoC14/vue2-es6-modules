@@ -1,47 +1,37 @@
 'use strict';
 
+
 export const homeInlineTemp = {
 
-  // Mounted lifecycle method is called after the created method
-  mounted() {
-
-    // Retrieve homePageContent json
-    axios.get('../data/homeInlineTempData.json')
-    .then(({ data }) => data)
-    .then((json) => {
-      this.homePageData = json;
-      this.homePageResults = json;
-    }),
-
-    // Retrieve homePageSubContent json
-    axios.get('../data/homeInlineTempNav.json')
-    .then(({ data }) => data)
-    .then((json) => this.homePageNavContent = json)
-
-  },
-
+  // Local component data
   data() {
     return {
 
       title: "Home Page",
-      homePageData: '',
       homePageNavContent: '',
-      homePageResults: ''
+      search: null,
 
     }
   },
 
   methods: {
 
+    getNavbarJson() {
+      // Retrieve homePageSubContent json
+      // Leaving this locally because only this component needs this data
+      return axios.get('../data/homeInlineTempNav.json')
+      .then(({ data }) => data)
+      .then((json) => this.homePageNavContent = json)
+    },
+
     // Filters the results shown on the page
     filterPage(keyword) {
       if (!keyword) {
-        this.homePageResults = this.homePageData;
-        return;
+        return this.search = null;
       }
 
-      const filteredResults = this.homePageData.filter( each => each.page == keyword);
-      this.homePageResults = filteredResults;
+      this.search = keyword;
+
     },
 
     // Send task to modal
@@ -49,6 +39,19 @@ export const homeInlineTemp = {
       this.EventMain.$emit('sendTaskToModal', each);
     },
 
-  }
+  },
+
+  computed: {
+    // Vuex helper function which returns getAllTasks from store getters
+    // Long hand for would look like: this.$state.getters.getAllTasks
+    ...Vuex.mapGetters([ 'getAllTasks' ])
+  },
+
+  // Mounted lifecycle method is called after the created method
+  mounted() {
+
+    this.getNavbarJson();
+
+  },
 
 };

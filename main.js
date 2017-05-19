@@ -1,107 +1,50 @@
 'use strict';
 
+import { globalStore } from './data/store.js';
+import { taskListInline } from './components/taskListInline.js';
 import { taskListComp } from './components/taskList.js';
 import { taskComp } from './components/task.js';
 import { errorAlertComp } from './components/erroralert.js';
 import { taskDisplayModalComp } from './components/modal.js';
 import { homeInlineTemp } from './components/inlineTemp.js';
+import { counterComp } from './components/counter.js';
+import { peopleListTemp } from './components/peopleList.js';
+import { inputComp } from './components/input.js';
 
+
+// Creating root event hub for components
 const EventMain = new Vue();
+// Adding eventhub as a global mixin, e.g. available to all components
+// This line is how to return event hub as a single ES6 function
+Vue.mixin({ data: () => ({ EventMain })});
 
-Vue.mixin({
-  data() {
-    return {
-      EventMain: EventMain
-    }
-  }
-});
 
-new Vue({
+const app = new Vue({
   el: '#root',
 
-  data: {
-    message: 'I am Groot',
-    newName: null,
-    newAge: null,
-    nameError: false,
-    ageError: false,
-    completedTaskList: [],
-    newNamePlaceholder: 'Enter a name to add',
-    addingName: false,
-    people: [
-      { name: 'Marisa', age: 26 },
-      { name: 'Thomas', age: 24 },
-      { name: 'Lauren', age: 17 },
-    ],
-    taskList: [
-      { task: 'Grocery Store', desc: 'Need milk and eggs', completed: false },
-      { task: 'Bank', desc: 'Need checks', completed: false },
-      { task: 'Oil Change', desc: '6:30 Friday 2/24', completed: false },
-      { task: 'Pay Bills', desc: 'Electric and Water due', completed: false },
-    ],
-  },
-
-  created() {
-
-    // Complete a task when a done button is clicked. Received from task comp
-    this.EventMain.$on('completed', (task) => this.taskCompleted(task));
-
-  },
+  store: globalStore,
 
   components: {
-    'task-list': taskListComp,
-    'task': taskComp,
     'error-alert': errorAlertComp,
     'msg-modal': taskDisplayModalComp,
-    'home-inline-template': homeInlineTemp
+    'home-inline-template': homeInlineTemp,
+    'counter': counterComp,
+    'people-list-inline-template': peopleListTemp,
+    'task-list-inline': taskListInline,
+    // 'input-comp': inputComp,
   },
 
-  methods: {
+  // Vuex helper method to map store actions locally
+  // Longhand would look like this: this.$store.dispatch('getTaskListJson'[, payload]);
+  methods: Vuex.mapActions([ 'getTaskListJson', 'getPeopleJson' ]),
 
-    validateNewPerson() {
-      if (!this.newName) {
-        this.nameError = true;
-      } else {
-        this.nameError = false;
-      }
+  // Once the instance is created, then it is mounted
+  mounted() {
 
-      if (!this.newAge) {
-        this.ageError = true;
-      } else {
-        this.ageError = false;
-      }
-
-      if (this.ageError || this.nameError) {
-        return;
-      }
-
-      this.addNewPerson();
-    },
-
-    addNewPerson() {
-      // Playing around with dynamically toggling a button disable
-      this.addingName = true;
-      setTimeout(() => {
-        this.addingName = false
-        this.people.push({ name: this.newName, age: this.newAge });
-        this.newName = null;
-        this.newAge = null;
-      }, 1000);
-    },
-
-    taskCompleted(val) {
-      this.taskList.splice(this.taskList.indexOf(val), 1);
-      this.completedTaskList.push(val);
-    }
+    // Dispatching actions on the store
+    this.getTaskListJson();
+    this.getPeopleJson();
 
   },
-
-  computed: {
-
-    adults() {
-      return this.people.filter(each => each.age >= 18);
-    },
-
-  }
 
 });
