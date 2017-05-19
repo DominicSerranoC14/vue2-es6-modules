@@ -9,6 +9,7 @@ import { taskDisplayModalComp } from './components/modal.js';
 import { homeInlineTemp } from './components/inlineTemp.js';
 import { counterComp } from './components/counter.js';
 import { peopleListTemp } from './components/peopleList.js';
+import { inputComp } from './components/input.js';
 
 
 // Creating root event hub for components
@@ -30,6 +31,7 @@ const app = new Vue({
     'counter': counterComp,
     'people-list-inline-template': peopleListTemp,
     'task-list-inline': taskListInline,
+    // 'input-comp': inputComp,
   },
 
   // Vuex helper method to map store actions locally

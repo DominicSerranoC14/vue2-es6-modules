@@ -35,7 +35,7 @@
 
             <input type="text" :placeholder="newNamePlaceholder" :class="{ 'error': nameError ? true: false }" v-model="newName" />
             <input type="number" min="0" max="100" :class="{ 'error': ageError ? true: false }" v-model="newAge" />
-            <button type="button" :disabled="addingName" @click="validateNewPerson">Add Name</button>
+            <button type="button" class="btn btn-secondary" :disabled="addingName" @click="validateNewPerson">Add Name</button>
           </div>
         </people-list-inline-template>
       </div>
@@ -85,6 +85,7 @@
       <div class="col-sm-3 box">
         <div class="row justify-content-center">
           <counter></counter>
+
         </div>
       </div>
 
